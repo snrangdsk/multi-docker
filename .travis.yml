@@ -9,18 +9,17 @@ script:
   - docker run shiqi/test npm test -- --coverage
 
 after_success:
-  - docker build -t shiqi/multi-client ./client
-  - docker build -t shiqi/multi-nginx ./nginx
-  - docker build -t shiqi/multi-server ./server
-  - docker build -t shiqi/multi-worker ./worker
+  - docker build -t snrangdsk/multi-client ./client
+  - docker build -t snrangdsk/multi-nginx ./nginx
+  - docker build -t snrangdsk/multi-server ./server
+  - docker build -t snrangdsk/multi-worker ./worker
 
 #login to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 #push image into dockerhub
-  - docker tag shiqi/multi-client snrangdsk/multi-docker:latest
-  - docker tag shiqi/multi-nginx snrangdsk/multi-docker:latest
-  - docker tag shiqi/multi-server snrangdsk/multi-docker:latest
-  - docker tag shiqi/multi-worker snrangdsk/multi-docker:latest
+  - docker push snrangdsk/multi-client
+  - docker push snrangdsk/multi-nginx 
+  - docker push snrangdsk/multi-server
+  - docker push snrangdsk/multi-worker
 
-  - docker push snrangdsk/multi-docker
 
