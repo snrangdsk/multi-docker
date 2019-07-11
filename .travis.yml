@@ -17,8 +17,10 @@ after_success:
 #login to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 #push image into dockerhub
-  - docker push shiqi/multi-client
-  - docker push shiqi/multi-nginx
-  - docker push shiqi/multi-server
-  - docker push shiqi/multi-worker
+  - docker tag shiqi/multi-client snrangdsk/multi-docker:latest
+  - docker tag shiqi/multi-nginx snrangdsk/multi-docker:latest
+  - docker tag shiqi/multi-server snrangdsk/multi-docker:latest
+  - docker tag shiqi/multi-worker snrangdsk/multi-docker:latest
+
+  - docker push snrangdsk/multi-docker
 
