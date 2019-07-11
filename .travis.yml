@@ -1,0 +1,24 @@
+sudo : required
+services:
+  - docker
+
+before_install:
+  - docker build -t shiqi/test -f ./client Dockerfile.dev ./client
+
+script:
+  - docker run shiqi/test npm test -- --coverage
+
+after_sucess:
+  - docker build -t shiqi/multi-client ./client
+  - docker build -t shiqi/multi-nginx ./nginx
+  - docker build -t shiqi/multi-server ./server
+  - docker build -t shiqi/multi-worker ./worker
+
+#login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#push image into dockerhub
+  - docker push shiqi/multi-client
+  - docker push shiqi/multi-nginx
+  - docker push shiqi/multi-server
+  - docker push shiqi/multi-worker
+
