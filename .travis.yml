@@ -8,7 +8,7 @@ before_install:
 script:
   - docker run shiqi/test npm test -- --coverage
 
-after_sucess:
+after_success:
   - docker build -t shiqi/multi-client ./client
   - docker build -t shiqi/multi-nginx ./nginx
   - docker build -t shiqi/multi-server ./server
